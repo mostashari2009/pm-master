@@ -28,7 +28,7 @@ import AddFailureCauseButton from "./AddFailureCauseButton";
 import AddWorkOrderButton from "./AddWorkOrderButton";
 import { Divider, makeStyles } from "@material-ui/core";
 import FailureCauseFilter from "../FailureCause/FailureCauseFilter";
-import WorkOrderFilter from "../WorkOrder/WorkOrderFilter";
+import WorkOrderFilter2 from "../WorkOrder/WorkOrderFilter2";
 import jsonExport from "jsonexport/dist";
 import AddWRStatusButton from "./AddWRStatusButton";
 import WRStatusFilter from "../WRStatus/WRStatusFilter";
@@ -465,7 +465,7 @@ const WorkRequestShow = (props) => {
             <List
               exporter={exporterWorkOrder}
               empty={false}
-              filters={<WorkOrderFilter />}
+              filters={<WorkOrderFilter2 />}
               actions={<WorkOrderActions data={record} />}
               bulkActionButtons={false}
             >
