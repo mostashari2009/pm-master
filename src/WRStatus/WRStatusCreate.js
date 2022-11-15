@@ -49,6 +49,14 @@ const useStyles = makeStyles({
       margin: "auto",
       color: "#0863cc",
     },
+    "& input:disabled": {
+      borderStartStartRadius: "15px",
+      borderStartEndRadius: "15px",
+      borderBottomLeftRadius: "15px",
+      borderBottomRightRadius: "15px",
+      backgroundColor: "whitesmoke",
+      height: "27px",
+    },
     "& .MuiButton-contained": {
       marginRight: "10px",
       background: "#0863cc",
@@ -87,13 +95,6 @@ const useStyles = makeStyles({
     },
     "& .MuiFilledInput-filled:focus": {
       border: "2px solid #0863cc",
-    },
-    "& .Mui-disabled": {
-      borderStartStartRadius: "15px",
-      borderStartEndRadius: "15px",
-      borderBottomLeftRadius: "15px",
-      borderBottomRightRadius: "15px",
-      backgroundColor: "whitesmoke",
     },
   },
 
@@ -184,7 +185,9 @@ const useStyles = makeStyles({
     },
   },
   last: { display: "inline-block", marginRight: 0 },
-  sel: { "& svg": { display: "none" } },
+  sel: {
+    "& svg": { display: "none" },
+  },
 });
 
 const Separator = () => <Box pt="0em" />;
@@ -258,22 +261,27 @@ const WRStatusCreate = (props) => {
           source="StatusTime"
         />
         <Separator />
-        <TextInput
+        <ReferenceInput
+          disabled
           className={classes.sel}
           formClassName={classes.fir}
           label="کد وضعیت"
           textAlgin="right"
           source="StatusID"
           reference="PMWorks/Status"
-        />
-        <TextInput
+        >
+          <SelectInput optionText="StatusCode" />
+        </ReferenceInput>
+        <ReferenceInput
           formClassName={classes.sec}
           label="عنوان وضعیت"
           textAlgin="right"
-          source="StatusName"
+          source="StatusID"
           reference="PMWorks/StatusWR"
-          //filter={{ WorkRequestID: WorkRequestID }}
-        />
+          filter={{ WorkRequestID: WorkRequestID }}
+        >
+          <SelectInput optionText="StatusName" />
+        </ReferenceInput>
         <Separator />
         <TextInput
           multiline
