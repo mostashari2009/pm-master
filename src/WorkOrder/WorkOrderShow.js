@@ -347,31 +347,34 @@ const WOStatusActions = ({ basePath, data }, props) => {
 
 const useStyles = makeStyles({
   page: {
-    margin: "10px",
+    margin: "0 auto",
     direction: "rtl",
+
     "& .MuiTableCell-head": {
       backgroundColor: "#DCDCDC",
-      fontWeight: "650",
+      padding: "5px",
+      fontSize: "12px",
     },
-
     "& .MuiFormControl-marginDense": {
       border: "1px solid #DCDCDC",
       right: "5px",
-      margin: "0",
-      height: "70px",
-      width: "120px",
-      paddingRight: "5px",
-    },
-
-    "& .MuiInputLabel-marginDense": {
-      paddingRight: "5px",
+      margin: "0 auto",
+      height: "80px",
+      width: "121px",
+      paddingRight: "2px",
+      fontSize: "12px",
     },
     "& .MuiTypography-body2": {
-      fontSize: "1rem",
+      fontSize: "12px",
     },
+
     "& .MuiTableCell-sizeSmall": {
-      padding: "4px 4px 4px 4px",
-      fontSize: "0.9rem",
+      padding: "4px 4px 4px 0px",
+
+      margin: "0 auto",
+    },
+    "& .MuiTableCell-sizeSmall:last-child": {
+      width: "150px",
     },
   },
   sho: {
@@ -388,6 +391,7 @@ const useStyles = makeStyles({
   },
   gridcontainer: {
     display: "grid",
+    gridTemplateColumns: "(1fr 1fr)",
     padding: "2px",
   },
   it1: {
@@ -398,76 +402,78 @@ const useStyles = makeStyles({
     gridColumn: "1 / span 2",
     gridRow: "2",
     border: "1px solid #DCDCDC",
-    padding: "10px",
+    padding: "2px",
   },
   it3: {
     gridRow: "3",
     border: "1px solid #DCDCDC",
-    padding: "10px",
+    padding: "2px",
   },
   it4: {
-    padding: "10px",
+    padding: "2px",
     gridRow: "3",
     border: "1px solid #DCDCDC",
   },
   it5: {
+    gridColumn: "1",
     gridRow: "4",
     border: "1px solid #DCDCDC",
-    padding: "5px",
+    padding: "1px",
   },
   it6: {
-    padding: "5px",
+    gridColumn: "2",
+    padding: "1px",
     gridRow: "4",
     border: "1px solid #DCDCDC",
   },
 
   gridContainer1: {
-    gridTemplateColumns: "60px auto 160px",
+    gridTemplateColumns: "60px auto 100px",
     display: "grid",
-    padding: "5px",
+    padding: "2px",
   },
   item: {
     border: "1px solid #DCDCDC",
     padding: "4px",
-    fontSize: "0.9rem",
-    fontWeight: "700",
+    fontSize: "0.7rem",
+    fontWeight: "600",
     textAlign: "center",
-    height: "21px",
+    height: "20px",
   },
 
   gridContainer2: {
-    padding: "5px",
+    padding: "2px",
     display: "grid",
   },
   item1: {
     gridColumn: "1 / span 2",
     border: "1px solid #DCDCDC",
-    padding: "4px 10PX",
-    fontSize: "14px",
+    padding: "5px 10PX",
+    fontSize: "12px",
     padding: "5px",
   },
   item2: {
     gridColumn: "1 / span 2",
     border: "1px solid #DCDCDC",
     paddingRight: "10px",
-    fontSize: "0.9rem",
+    fontSize: "12px",
   },
   item3: {
     border: "1px solid #DCDCDC",
-    padding: "4px 10PX",
-    fontSize: "14px",
+    padding: "5px 10PX",
+    fontSize: "12px",
   },
   item4: {
     border: "1px solid #DCDCDC",
-    padding: "4px 10PX",
-    fontSize: "0.9rem",
+    padding: "5px 10PX",
+    fontSize: "12px",
   },
   item5: {
     gridColumn: "1 / span 2",
     border: "1px solid #DCDCDC",
-    padding: "4px 10PX",
-    fontSize: "0.9rem",
-    height: "50px",
+    padding: "5px 10PX",
+    fontSize: "12px",
+    height: "53px",
   },
 });
 
@@ -706,7 +712,7 @@ const WorkOrderShow = (props) => {
             <TableRow>
               <TableCell align="right">کد قطعه</TableCell>
               <TableCell align="right">نام قطعه</TableCell>
-              <TableCell align="right">تعداد</TableCell>
+              <TableCell align="left">تعداد</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -746,8 +752,8 @@ const WorkOrderShow = (props) => {
             <TableRow>
               <TableCell align="right">نام</TableCell>
               <TableCell align="right">نام خانوادگی</TableCell>
-              <TableCell align="right">تاریخ انجام</TableCell>
-              <TableCell align="right">مدت زمان انجام(دقیقه)</TableCell>
+              <TableCell align="left">تاریخ انجام</TableCell>
+              <TableCell align="left"> زمان انجام(دقیقه)</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -779,8 +785,11 @@ const WorkOrderShow = (props) => {
           <div ref={componentRef} className={classes.page}>
             <SimpleShowLayout>
               <Typography
-                variant="h4"
-                style={{ marginRight: "40%", padding: "10px" }}
+                style={{
+                  paddingRight: "45%",
+                  marginBottom: "5px",
+                  fontWeight: "bold",
+                }}
               >
                 فرم دستور کار
               </Typography>
@@ -842,6 +851,15 @@ const WorkOrderShow = (props) => {
                 textAlgin="right"
                 // source="WODescription"
               />
+              <ReferenceField
+                className={classes.sho}
+                label="زمان خرابی"
+                textAlgin="right"
+                source="WorkRequestID__FailureModeID"
+                reference="PMWorks/FailureMode"
+              >
+                <TextField source="FailureModeName" />
+              </ReferenceField>
               <FunctionField
                 className={classes.sec}
                 render={(record) =>
@@ -880,7 +898,6 @@ const WorkOrderShow = (props) => {
                 label="توضیحات"
                 textAlgin="right"
                 source="WODescription"
-                width="200px"
               />
               <div className={classes.gridcontainer}>
                 <div className={classes.it1}></div>
@@ -888,8 +905,10 @@ const WorkOrderShow = (props) => {
                   <Grid container spacing={1}>
                     <Grid item xs={12}>
                       <Typography
-                        variant="h6"
-                        style={{ marginRight: "40%", padding: "10px" }}
+                        style={{
+                          paddingRight: "45%",
+                          fontWeight: "500",
+                        }}
                       >
                         لیست فعالیت‌ها
                       </Typography>
@@ -915,7 +934,7 @@ const WorkOrderShow = (props) => {
                             actions={null}
                             pagination={null}
                           >
-                            <Datagrid className={classes.page2}>
+                            <Datagrid>
                               <ReferenceField
                                 label="کد تجهیز"
                                 textAlgin="right"
@@ -965,6 +984,7 @@ const WorkOrderShow = (props) => {
                                 choices={freq}
                                 optionText="full_name"
                                 optionValue="_id"
+                                width="30%"
                               />
                             </Datagrid>
                           </List>
@@ -978,8 +998,11 @@ const WorkOrderShow = (props) => {
                 <div className={classes.it3}>
                   <Grid item xs={12}>
                     <Typography
-                      variant="h6"
-                      style={{ marginRight: "40%", padding: "10px" }}
+                      style={{
+                        paddingRight: "33%",
+                        marginBottom: "5px",
+                        fontWeight: "500",
+                      }}
                     >
                       لیست قطعات یدکی
                     </Typography>
@@ -1029,8 +1052,11 @@ const WorkOrderShow = (props) => {
                 <div className={classes.it4}>
                   <Grid item xs={12}>
                     <Typography
-                      variant="h6"
-                      style={{ marginRight: "40%", padding: "10px" }}
+                      style={{
+                        paddingRight: "33%",
+                        marginBottom: "5px",
+                        fontWeight: "500",
+                      }}
                     >
                       لیست نیروی انسانی
                     </Typography>
@@ -1087,8 +1113,11 @@ const WorkOrderShow = (props) => {
                 <div className={classes.it5}>
                   <Grid item xs={12}>
                     <Typography
-                      variant="h6"
-                      style={{ marginRight: "40%", padding: "10px" }}
+                      style={{
+                        paddingRight: "45%",
+                        marginBottom: "5px",
+                        fontWeight: "500",
+                      }}
                     >
                       تاخیرات
                     </Typography>
@@ -1109,14 +1138,20 @@ const WorkOrderShow = (props) => {
                       <div className={classes.item}></div>
                       <div className={classes.item}></div>
                       <div className={classes.item}></div>
+                      <div className={classes.item}></div>
+                      <div className={classes.item}></div>
+                      <div className={classes.item}></div>
                     </div>
                   </Grid>
                 </div>
                 <div className={classes.it6}>
                   <Grid item xs={12}>
                     <Typography
-                      variant="h6"
-                      style={{ marginRight: "40%", padding: "10px" }}
+                      style={{
+                        paddingRight: "45%",
+                        marginBottom: "5px",
+                        fontWeight: "500",
+                      }}
                     >
                       تحویل
                     </Typography>
@@ -1135,6 +1170,8 @@ const WorkOrderShow = (props) => {
                       <div className={classes.item3}>تاریخ:</div>
                       <div className={classes.item4}>ساعت:</div>
                       <div className={classes.item5}>توضیحات:</div>
+                      <div className={classes.item3}>نام و امضای سرپرست:</div>
+                      <div className={classes.item4}>نام و امضای مدیر:</div>
                     </div>
                   </Grid>
                 </div>
