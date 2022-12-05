@@ -138,10 +138,9 @@ const useStyles = makeStyles({
       borderStartEndRadius: "15px",
       borderBottomLeftRadius: "15px",
       borderBottomRightRadius: "15px",
-      margin: "10px 5px",
       right: "5px",
-      height: "45px",
-      width: "240px",
+      height: "60px",
+      width: "285px",
       paddingRight: "10px",
     },
     "& .MuiInputLabel-shrink ": {
@@ -172,11 +171,11 @@ const useStyles = makeStyles({
       borderStartEndRadius: "15px",
       borderBottomLeftRadius: "15px",
       borderBottomRightRadius: "15px",
-      margin: "10px 5px",
       right: "5px",
-      height: "90px",
-      width: "510px",
+      height: "100px",
+      width: "1250px",
       paddingRight: "5px",
+      marginBottom: "25px",
     },
     "& .MuiInputLabel-shrink ": {
       transform: "translate(30%, -8px ) scale(0.75) !important;",
@@ -206,11 +205,11 @@ const useStyles = makeStyles({
       borderStartEndRadius: "15px",
       borderBottomLeftRadius: "15px",
       borderBottomRightRadius: "15px",
-      margin: "10px 5px",
       right: "5px",
-      height: "45px",
-      width: "510px",
+      height: "60px",
+      width: "605px",
       paddingRight: "5px",
+      marginTop: "25px",
     },
     "& .MuiInputLabel-shrink ": {
       transform: "translate(30%, -8px ) scale(0.75) !important;",
@@ -288,17 +287,8 @@ const WorkRequestShow = (props) => {
         <Tab label="درخواست" className={classes.tab}>
           <SimpleShowLayout>
             <WorkRequestField className={classes.width} source="id" />
-            <Divider width="0px" />
-            <JalaaliDateField
-              className={classes.sho}
-              textAlgin="right"
-              source="WRDateOfRegistration"
-              label="تاریخ ثبت"
-            />
-            <Labeled className={classes.sho} label="زمان ثبت" textAlgin="right">
-              <JalaaliTimeField source="WRTimeOfRegistration" />
-            </Labeled>
-            <Divider width="0px" />
+          </SimpleShowLayout>
+          <SimpleShowLayout>
             <JalaaliDateField
               className={classes.sho}
               textAlgin="right"
@@ -312,29 +302,18 @@ const WorkRequestShow = (props) => {
             >
               <JalaaliTimeField source="WRTime" />
             </Labeled>
-            <Divider width="0px" />
-            <ReferenceField
+            <JalaaliDateField
               className={classes.sho}
-              label="اولیت درخواست"
               textAlgin="right"
-              source="WorkPriorityID"
-              reference="PMWorks/WorkPriority"
-            >
-              <TextField source="WorkPriorityCode" />
-            </ReferenceField>
+              source="WRDateOfRegistration"
+              label="تاریخ ثبت"
+            />
+            <Labeled className={classes.sho} label="زمان ثبت" textAlgin="right">
+              <JalaaliTimeField source="WRTimeOfRegistration" />
+            </Labeled>
+          </SimpleShowLayout>
 
-            <ReferenceField
-              className={classes.sho}
-              label="نوع درخواست"
-              textAlgin="right"
-              source="TypeWrID"
-              reference="PMWorks/TypeWr"
-            >
-              <TextField source="TypeWrName" />
-            </ReferenceField>
-            <br />
-            <Divider width="530px" />
-            <br />
+          <SimpleShowLayout>
             <ReferenceField
               className={classes.sho}
               label="کد تجهیز"
@@ -354,7 +333,6 @@ const WorkRequestShow = (props) => {
             >
               <TextField source="AssetID__AssetName" />
             </ReferenceField>
-            <Divider width="0px" />
             <ReferenceField
               className={classes.sho}
               label="خانواده تجهیز"
@@ -373,9 +351,9 @@ const WorkRequestShow = (props) => {
             >
               <TextField source="AssetID__LocationID__LocationName" />
             </ReferenceField>
-            <br />
-            <Divider width="530px" />
-            <br />
+          </SimpleShowLayout>
+
+          <SimpleShowLayout>
             <ReferenceField
               className={classes.sho}
               label="کد خرابی"
@@ -394,7 +372,27 @@ const WorkRequestShow = (props) => {
             >
               <TextField source="FailureModeName" />
             </ReferenceField>
-            <Divider width="0px" />
+            <ReferenceField
+              className={classes.sho}
+              label="اولیت درخواست"
+              textAlgin="right"
+              source="WorkPriorityID"
+              reference="PMWorks/WorkPriority"
+            >
+              <TextField source="WorkPriorityCode" />
+            </ReferenceField>
+
+            <ReferenceField
+              className={classes.sho}
+              label="نوع درخواست"
+              textAlgin="right"
+              source="TypeWrID"
+              reference="PMWorks/TypeWr"
+            >
+              <TextField source="TypeWrName" />
+            </ReferenceField>
+          </SimpleShowLayout>
+          <SimpleShowLayout>
             <TextField
               width="450px"
               className={classes.text}
