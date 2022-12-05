@@ -1,30 +1,54 @@
 import React, { useState } from "react";
-import { Button } from "react-admin";
+import { Button, useGetOne } from "react-admin";
 import { Dialog } from "@material-ui/core";
-import TouchAppIcon from '@material-ui/icons/TouchApp';
+import TouchAppIcon from "@material-ui/icons/TouchApp";
 import FailureModeList from "./FailureModeList";
-
-import { makeStyles } from '@material-ui/core/styles';
-
+import Drawer from "@material-ui/core/Drawer";
+import { makeStyles } from "@material-ui/core/styles";
+import CancelPresentationIcon from "@material-ui/icons/CancelPresentation";
 const useStyles = makeStyles({
-  fir: { fontFamily: 'system-ui', marginBottom: '16px' },
-
+  fir: { fontFamily: "system-ui", margin: "10px", color: "#0863cc" },
 });
 
 const QuickSelectFailureModeButton = ({ id, setId, ...props }) => {
+  //const toggleDrawer = () => setShowPanel((showPanel) => !showPanel);
   const [showPanel, setShowPanel] = useState(false);
   const classes = useStyles();
+  const { data } = useGetOne("PMWorks/FailureMode", id);
 
-  const toggleDrawer = () => setShowPanel((showPanel) => !showPanel);
+  const handleClick = () => {
+    setShowPanel(true);
+  };
 
+  const handleCloseClick = () => {
+    setShowPanel(false);
+  };
   return (
     <>
-      <Button className={classes.fir} onClick={toggleDrawer} label="انتخاب">
+      <Button className={classes.fir} onClick={handleClick} label="انتخاب">
         <TouchAppIcon />
       </Button>
-      <Dialog fullWidth open={showPanel} onClose={toggleDrawer}>
-        <FailureModeList style={{width: '780px'}} {...props} resource="PMWorks/FailureAsset" setId={setId} setShowPanel={setShowPanel} />
-      </Dialog>
+      <Drawer anchor="right" open={showPanel} onClose={handleCloseClick}>
+        <div>
+          <Button
+            className={classes.fir}
+            label={null}
+            title="بستن صفحه"
+            onClick={handleCloseClick}
+          >
+            <CancelPresentationIcon />
+          </Button>
+        </div>
+
+        <FailureModeList
+          record={data}
+          style={{ width: "780px" }}
+          {...props}
+          resource="PMWorks/FailureAsset"
+          setId={setId}
+          setShowPanel={setShowPanel}
+        />
+      </Drawer>
     </>
   );
 };
