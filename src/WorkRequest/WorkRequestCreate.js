@@ -34,13 +34,13 @@ const validateError = (values) => {
     errors.AssetSubdivisionID = "تجهیز را وارد کنید";
   }
   if (!values.FailureModeID) {
-    errors.FailureModeID = "خرابی را وارد کنید";
+    errors.FailureModeID = " عنوان خرابی را وارد کنید";
   }
   if (!values.WorkPriorityID) {
     errors.WorkPriorityID = "اولویت را وارد کنید";
   }
   if (!values.TypeWrID) {
-    errors.TypeWrID = "نوع را وارد کنید";
+    errors.TypeWrID = "نوع درخواست را وارد کنید";
   }
   if (!values.WRDate) {
     errors.WRDate = "تاریخ را وارد کنید";
@@ -89,15 +89,13 @@ const useStyles = makeStyles({
       padding: "5px, 10px",
       marginBottom: " 20px",
     },
-    "& .MuiFormHelperText-contained": {
-      height: "0px",
-    },
+
     "& .MuiInputLabel-formControl": {
       left: "auto",
       color: "#0863cc",
     },
     "& .MuiInputLabel-shrink ": {
-      transform: "translate(30%, -7px ) scale(0.75) !important;",
+      transform: "translate(30%, -8px ) scale(0.75) !important;",
       background: "#fff",
       color: "#0863cc",
       paddingRight: "3px",
@@ -126,6 +124,9 @@ const useStyles = makeStyles({
     },
     "& input": {
       padding: "17px 30px 10px",
+    },
+    "& .MuiFormHelperText-root": {
+      textAlign: "right",
     },
   },
 
@@ -266,7 +267,7 @@ export const WorkRequestCreate = (props) => {
             formData.AssetSubdivisionID && (
               <ReferenceInput
                 disabled
-                label="کد کلاس تجهیز"
+                label="کد خانواده تجهیز"
                 textAlgin="right"
                 source="AssetSubdivisionID"
                 reference="PMWorks/AssetSubdivision"
@@ -282,7 +283,7 @@ export const WorkRequestCreate = (props) => {
             formData.AssetSubdivisionID && (
               <ReferenceInput
                 disabled
-                label="عنوان کلاس تجهیز"
+                label="عنوان خانواده تجهیز"
                 textAlgin="right"
                 source="AssetSubdivisionID"
                 reference="PMWorks/AssetSubdivision"
@@ -306,13 +307,14 @@ export const WorkRequestCreate = (props) => {
           textAlgin="right"
           source="WRTime"
         />
+        <br />
         <Separator />
         <FormDataConsumer className={classes.sel} formClassName={classes.fir}>
           {({ formData, ...rest }) =>
             formData.AssetSubdivisionID && (
               <ReferenceInput
                 disabled
-                label="کد خرابی"
+                label="کد حالت خرابی"
                 textAlgin="right"
                 source="FailureModeID"
                 reference="PMWorks/FailureAsset"
@@ -327,7 +329,7 @@ export const WorkRequestCreate = (props) => {
           {({ formData, ...rest }) =>
             formData.AssetSubdivisionID && (
               <FailureModeRefrenceInput
-                label="عنوان خرابی"
+                label="عنوان حالت خرابی"
                 textAlgin="right"
                 source="FailureModeID"
                 reference="PMWorks/FailureAsset"
