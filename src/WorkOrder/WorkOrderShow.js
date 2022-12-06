@@ -391,8 +391,8 @@ const useStyles = makeStyles({
   },
   gridcontainer: {
     display: "grid",
-    gridTemplateColumns: "(1fr 1fr)",
-    padding: "2px",
+    gridTemplateColumns: "71% 71%",
+    padding: "4px",
   },
   it1: {
     gridColumn: "1 / span 2",
@@ -428,7 +428,7 @@ const useStyles = makeStyles({
   },
 
   gridContainer1: {
-    gridTemplateColumns: "60px auto 100px",
+    gridTemplateColumns: "60px auto 90px",
     display: "grid",
     padding: "2px",
   },
@@ -448,7 +448,7 @@ const useStyles = makeStyles({
   item1: {
     gridColumn: "1 / span 2",
     border: "1px solid #DCDCDC",
-    padding: "5px 10PX",
+    padding: "5px 10px",
     fontSize: "12px",
     padding: "5px",
   },
@@ -460,18 +460,18 @@ const useStyles = makeStyles({
   },
   item3: {
     border: "1px solid #DCDCDC",
-    padding: "5px 10PX",
+    padding: "5px 10px",
     fontSize: "12px",
   },
   item4: {
     border: "1px solid #DCDCDC",
-    padding: "5px 10PX",
+    padding: "5px 10px",
     fontSize: "12px",
   },
   item5: {
     gridColumn: "1 / span 2",
     border: "1px solid #DCDCDC",
-    padding: "5px 10PX",
+    padding: "5px 10px",
     fontSize: "12px",
     height: "53px",
   },
