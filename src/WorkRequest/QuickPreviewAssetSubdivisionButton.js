@@ -43,7 +43,7 @@ const QuickPreviewAssetSubdivisionButton = ({ id, setId, ...props }) => {
         <AssetSubdivisionList
           record={data}
           basePath="/PMWorks/AssetSubdivision"
-          style={{ width: "800px" }}
+          style={{ width: "auto" }}
           {...props}
           resource="PMWorks/AssetSubdivision"
           setId={setId}
