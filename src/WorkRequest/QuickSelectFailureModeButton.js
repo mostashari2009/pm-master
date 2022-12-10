@@ -42,7 +42,7 @@ const QuickSelectFailureModeButton = ({ id, setId, ...props }) => {
 
         <FailureModeList
           record={data}
-          style={{ width: "780px" }}
+          style={{ width: "auto" }}
           {...props}
           resource="PMWorks/FailureAsset"
           setId={setId}
