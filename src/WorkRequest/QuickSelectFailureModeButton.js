@@ -28,7 +28,7 @@ const QuickSelectFailureModeButton = ({ id, setId, ...props }) => {
       <Button className={classes.fir} onClick={handleClick} label="انتخاب">
         <TouchAppIcon />
       </Button>
-      <Drawer anchor="right" open={showPanel} onClose={handleCloseClick}>
+      <Dialog anchor="right" open={showPanel} onClose={handleCloseClick}>
         <div>
           <Button
             className={classes.fir}
@@ -48,7 +48,7 @@ const QuickSelectFailureModeButton = ({ id, setId, ...props }) => {
           setId={setId}
           setShowPanel={setShowPanel}
         />
-      </Drawer>
+      </Dialog>
     </>
   );
 };
