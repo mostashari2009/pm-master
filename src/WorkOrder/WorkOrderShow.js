@@ -27,6 +27,10 @@ import {
   SimpleShowLayout,
   useGetOne,
   FunctionField,
+  FilterButton,
+  SelectInput,
+  Filter,
+  Pagination,
 } from "react-admin";
 import WorkOrderTitle from "./WorkOrderTitle";
 import JalaaliDateField from "../Components/JalaaliDateField";
@@ -67,6 +71,8 @@ import TouchAppIcon from "@material-ui/icons/TouchApp";
 import Grid from "@material-ui/core/Grid";
 import Typography from "@material-ui/core/Typography";
 import Divider from "@material-ui/core/Divider";
+import WOTaskFilters from "../WOTask/WOTaskFilters";
+import Logo from "../WorkOrder/logoWorkOrderShow.png";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
 const importOptions = {
   parseConfig: {
@@ -347,6 +353,9 @@ const WOStatusActions = ({ basePath, data }, props) => {
 
 const useStyles = makeStyles({
   page: {
+    headerCell: {
+      display: "none",
+    },
     margin: "0 auto",
     direction: "rtl",
 
@@ -355,6 +364,7 @@ const useStyles = makeStyles({
       padding: "5px",
       fontSize: "12px",
     },
+
     "& .MuiFormControl-marginDense": {
       border: "1px solid #DCDCDC",
       right: "5px",
@@ -377,6 +387,19 @@ const useStyles = makeStyles({
       width: "150px",
     },
   },
+  row: {
+    "& .nth-of-type(odd)": {
+      backgroundColor: "#def2ff",
+    },
+    "& .last-child td, &:last-child th": {
+      border: "0",
+    },
+  },
+
+  headCell: {
+    padding: "5px 5px",
+    ontSize: "12px",
+  },
   sho: {
     display: "inline-block",
     textAlignLast: "right",
@@ -388,6 +411,22 @@ const useStyles = makeStyles({
 
   ex: {
     fontFamily: "inherit",
+  },
+  headerContainer: {
+    gridTemplateColumns: "125px auto 125px",
+    display: "grid",
+    padding: "4px",
+  },
+  itemhead: {
+    border: "1px solid #DCDCDC",
+    padding: "4px 10px",
+    fontSize: "0.7rem",
+    fontWeight: "600",
+    height: "50px",
+  },
+  logo: {
+    maxWidth: "45px",
+    marginRight: "30%",
   },
   gridcontainer: {
     display: "grid",
@@ -775,15 +814,102 @@ const WorkOrderShow = (props) => {
       </TableContainer>
     );
   };
+  const EmptyF = () => {
+    function createData(name, calories, fat, carbs, protein, acid, wheat) {
+      return { name, calories, fat, carbs, protein, acid, wheat };
+    }
 
+    const rows = [
+      createData(" ", " ", " ", " ", " ", " ", " "),
+      createData(" ", " ", " ", " ", " ", " ", " "),
+      createData(" ", " ", " ", " ", " ", " ", " "),
+      createData(" ", " ", " ", " ", " ", " ", " "),
+    ];
+    return (
+      <TableContainer component={Paper} className={classes.page1}>
+        <Table aria-label="simple table">
+          <TableHead>
+            <TableRow>
+              <TableCell align="right">کد تجهیز</TableCell>
+              <TableCell align="right">عنوان تجهیز</TableCell>
+              <TableCell align="right">مکان</TableCell>
+              <TableCell align="right">نام فعالیت</TableCell>
+              <TableCell align="right">کد فعالیت</TableCell>
+              <TableCell align="right">وضعیت انجام</TableCell>
+              <TableCell align="right">توضیحات</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {rows.map((row) => (
+              <TableRow
+                key={row.name}
+                sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+              >
+                <TableCell component="th" scope="row">
+                  {row.name}
+                </TableCell>
+                <TableCell align="right">{row.calories}</TableCell>
+                <TableCell align="right">{row.fat}</TableCell>
+                <TableCell align="right">{row.fat}</TableCell>
+                <TableCell align="right">{row.fat}</TableCell>
+                <TableCell align="right">{row.fat}</TableCell>
+                <TableCell align="right">{row.fat}</TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+    );
+  };
+
+  const CustomPagination = (props) => (
+    <Pagination rowsPerPageOptions={[10, 25, 50, 100, 200]} {...props} />
+  );
+  const CustomPagination2 = (props) => (
+    <Pagination
+      style={{ display: "none" }}
+      limit={1000}
+      rowsPerPageOptions={[1000, 2000]}
+      {...props}
+    />
+  );
   const classes = useStyles();
-
   return (
     <Show actions={<ShowActions />} {...props} title={<WorkOrderTitle />}>
       <TabbedShowLayout syncWithLocation={false} classes={classes}>
         <Tab label="مشخصات">
           <div ref={componentRef} className={classes.page}>
             <SimpleShowLayout>
+              <Grid item xs={12}>
+                <div className={classes.headerContainer}>
+                  <div className={classes.itemhead}>
+                    <div
+                      style={{
+                        paddingTop: "7px",
+                        paddingBottom: "5px",
+                      }}
+                    >
+                      کد سند:
+                    </div>
+                    <div> شماره ویرایش:</div>
+                  </div>
+                  <div className={classes.itemhead}>
+                    <Typography
+                      style={{
+                        fontWeight: "700",
+                        paddingRight: "33%",
+                        paddingTop: "10px",
+                      }}
+                    >
+                      دستور کار نت برنامه ریزی شده
+                    </Typography>
+                  </div>
+                  <div className={classes.itemhead}>
+                    {" "}
+                    <img src={Logo} alt="logo" className={classes.logo} />{" "}
+                  </div>
+                </div>
+              </Grid>
               <Typography
                 style={{
                   paddingRight: "45%",
@@ -800,24 +926,36 @@ const WorkOrderShow = (props) => {
                 textAlgin="right"
                 source="id"
               />
-              <TextField
+              <ReferenceField
                 className={classes.sho}
                 label="کد تجهیز"
                 textAlgin="right"
-                //source="WODescription"
-              />
-              <TextField
+                source="WorkRequestID__AssetSubdivisionID"
+                reference="PMWorks/AssetSubdivision"
+              >
+                <TextField className={classes.sho} source="AssetCode" />
+              </ReferenceField>
+              <ReferenceField
                 className={classes.sho}
                 label="عنوان تجهیز"
                 textAlgin="right"
-                //source="WODescription"
-              />
-              <TextField
+                source="WorkRequestID__AssetSubdivisionID"
+                reference="PMWorks/AssetSubdivision"
+              >
+                <TextField className={classes.sho} source="AssetName" />
+              </ReferenceField>
+              <ReferenceField
                 className={classes.sho}
                 label="مکان"
                 textAlgin="right"
-                // source="WODescription"
-              />
+                source="WorkRequestID__AssetSubdivisionID"
+                reference="PMWorks/AssetSubdivision"
+              >
+                <TextField
+                  className={classes.sho}
+                  source="AssetID__LocationID__LocationNameChain"
+                />
+              </ReferenceField>
 
               <ReferenceField
                 className={classes.sho}
@@ -826,7 +964,7 @@ const WorkOrderShow = (props) => {
                 source="WorkRequestID__FailureModeID"
                 reference="PMWorks/FailureMode"
               >
-                <TextField source="FailureModeName" />
+                <TextField className={classes.sho} source="FailureModeName" />
               </ReferenceField>
               <ReferenceField
                 className={classes.sho}
@@ -835,7 +973,7 @@ const WorkOrderShow = (props) => {
                 source="StatusID"
                 reference="PMWorks/Status"
               >
-                <TextField source="StatusName" />
+                <TextField className={classes.sho} source="StatusName" />
               </ReferenceField>
               <hr
                 style={{
@@ -845,20 +983,30 @@ const WorkOrderShow = (props) => {
                   margin: "0",
                 }}
               />
-              <TextField
+              <ReferenceField
                 className={classes.sec}
                 label="دپارتمان"
                 textAlgin="right"
-                // source="WODescription"
-              />
+                source="DepartmentID"
+                reference="PMWorks/Department"
+                sortBy="DepartmentID__DepartmentName"
+              >
+                <TextField source="DepartmentName" />
+              </ReferenceField>
               <ReferenceField
                 className={classes.sho}
                 label="زمان خرابی"
                 textAlgin="right"
-                source="WorkRequestID__FailureModeID"
-                reference="PMWorks/FailureMode"
+                source="WorkRequestID"
+                reference="PMWorks/WorkRequest"
+                linkType={false}
               >
-                <TextField source="FailureModeName" />
+                <JalaaliDateField
+                  className={classes.sho}
+                  textAlgin="right"
+                  source="WRDate"
+                  label="تاریخ خرابی"
+                />
               </ReferenceField>
               <FunctionField
                 className={classes.sec}
@@ -920,75 +1068,71 @@ const WorkOrderShow = (props) => {
                         reference="PMWorks/WOTaskOrder"
                         target="WOAssetSubdivisionID__WorkOrderID"
                         filter={{ WOAssetSubdivisionID__WorkOrderID: record }}
+                        perPage={1000}
                       >
-                        <ResourceContextProvider value="PMWorks/WOTaskOrder">
-                          <List
-                            bulkActionButtons={false}
-                            perPage={1000}
-                            syncWithLocation
-                            basePath="PMWorks/WOTaskOrder"
-                            filterDefaultValues={{
-                              WOAssetSubdivisionID__WorkOrderID: record,
-                            }}
-                            empty={<Empty />}
-                            actions={null}
-                            pagination={null}
-                          >
-                            <Datagrid>
-                              <ReferenceField
-                                label="کد تجهیز"
-                                textAlgin="right"
-                                source="WOAssetSubdivisionID__AssetSubdivisionID"
-                                reference="PMWorks/AssetSubdivision"
-                              >
-                                <TextField source="AssetCode" />
-                              </ReferenceField>
-                              <ReferenceField
-                                label="عنوان تجهیز"
-                                textAlgin="right"
-                                source="WOAssetSubdivisionID__AssetSubdivisionID"
-                                reference="PMWorks/AssetSubdivision"
-                              >
-                                <TextField source="AssetName" />
-                              </ReferenceField>
-                              <ReferenceField
-                                label="مکان"
-                                textAlgin="right"
-                                source="WOAssetSubdivisionID__AssetSubdivisionID"
-                                reference="PMWorks/AssetSubdivision"
-                              >
-                                <TextField source="AssetID__LocationID__LocationNameChain" />
-                              </ReferenceField>
-                              <ReferenceField
-                                label="نام فعالیت"
-                                textAlgin="right"
-                                source="TaskID"
-                                reference="PMWorks/AssetClassTask"
-                              >
-                                <TextField source="TaskName" />
-                              </ReferenceField>
-                              <ReferenceField
-                                label="کد فعالیت"
-                                textAlgin="right"
-                                source="TaskID"
-                                reference="PMWorks/AssetClassTask"
-                              >
-                                <TextField source="TaskCode" />
-                              </ReferenceField>
+                        <List
+                          perPage={1000}
+                          bulkActionButtons={false}
+                          syncWithLocation
+                          basePath="PMWorks/WOTaskOrder"
+                          empty={<EmptyF />}
+                          actions={null}
+                          pagination={<CustomPagination2 />}
+                        >
+                          <Datagrid>
+                            <ReferenceField
+                              label="کد تجهیز"
+                              textAlgin="right"
+                              source="WOAssetSubdivisionID__AssetSubdivisionID"
+                              reference="PMWorks/AssetSubdivision"
+                            >
+                              <TextField source="AssetCode" />
+                            </ReferenceField>
+                            <ReferenceField
+                              label="عنوان تجهیز"
+                              textAlgin="right"
+                              source="WOAssetSubdivisionID__AssetSubdivisionID"
+                              reference="PMWorks/AssetSubdivision"
+                            >
+                              <TextField source="AssetName" />
+                            </ReferenceField>
+                            <ReferenceField
+                              label="مکان"
+                              textAlgin="right"
+                              source="WOAssetSubdivisionID__AssetSubdivisionID"
+                              reference="PMWorks/AssetSubdivision"
+                            >
+                              <TextField source="AssetID__LocationID__LocationNameChain" />
+                            </ReferenceField>
+                            <ReferenceField
+                              label="نام فعالیت"
+                              textAlgin="right"
+                              source="TaskID"
+                              reference="PMWorks/AssetClassTask"
+                            >
+                              <TextField source="TaskName" />
+                            </ReferenceField>
+                            <ReferenceField
+                              label="کد فعالیت"
+                              textAlgin="right"
+                              source="TaskID"
+                              reference="PMWorks/AssetClassTask"
+                            >
+                              <TextField source="TaskCode" />
+                            </ReferenceField>
 
-                              <CheckBoxOutlineBlankIcon label="وضعیت انجام" />
-                              <TextField
-                                label="توضیحات"
-                                textAlgin="right"
-                                //source="WOTaskSituationOfDo"
-                                choices={freq}
-                                optionText="full_name"
-                                optionValue="_id"
-                                width="30%"
-                              />
-                            </Datagrid>
-                          </List>
-                        </ResourceContextProvider>
+                            <CheckBoxOutlineBlankIcon label="وضعیت انجام" />
+                            <TextField
+                              label="توضیحات"
+                              textAlgin="right"
+                              //source="WOTaskSituationOfDo"
+                              choices={freq}
+                              optionText="full_name"
+                              optionValue="_id"
+                              width="30%"
+                            />
+                          </Datagrid>
+                        </List>
                       </ReferenceManyField>
                       <Divider />
                     </Grid>
@@ -1282,8 +1426,8 @@ const WorkOrderShow = (props) => {
           >
             <ResourceContextProvider value="PMWorks/WOTaskOrder">
               <List
-                syncWithLocation
                 basePath="PMWorks/WOTaskOrder"
+                pagination={<CustomPagination />}
                 filterDefaultValues={{
                   WOAssetSubdivisionID__WorkOrderID: record,
                 }}
@@ -1335,7 +1479,14 @@ const WorkOrderShow = (props) => {
                   >
                     <TextField source="TaskCode" />
                   </ReferenceField>
-                  <CheckBoxOutlineBlankIcon label="وضعیت انجام" />
+                  <SelectField
+                    label="وضعیت انجام"
+                    textAlgin="right"
+                    source="WOTaskSituationOfDo"
+                    choices={freq}
+                    optionText="full_name"
+                    optionValue="_id"
+                  />
                 </Datagrid>
               </List>
             </ResourceContextProvider>
@@ -1464,10 +1615,10 @@ const WorkOrderShow = (props) => {
             </List>
           </ReferenceManyField>
         </Tab>
-        <Tab label="نیروی انسانی" path="PMWorks/WOPersonnel">
+        <Tab label="نیروی انسانی" path="PMWorks/WOPersonnelSum">
           <ReferenceManyField
             addLabel={false}
-            reference="PMWorks/WOPersonnel"
+            reference="PMWorks/WOPersonnelSum"
             target="WOTaskID__WOAssetSubdivisionID__WorkOrderID"
             filter={{ WOTaskID__WOAssetSubdivisionID__WorkOrderID: record }}
           >
@@ -1518,7 +1669,7 @@ const WorkOrderShow = (props) => {
                 <NumberField
                   label="مدت زمان انجام"
                   textAlgin="right"
-                  source="WorkTime"
+                  source="WorkTime__sum"
                 />
               </Datagrid>
             </List>
