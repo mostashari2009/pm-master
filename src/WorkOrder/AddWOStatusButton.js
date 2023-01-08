@@ -6,7 +6,7 @@ import { Button } from 'react-admin';
 
 const styles = {
   button: {
-    color: '#243261',
+    color: "#0863cc",
     fontSize: '0.8125rem',
     paddingLeft: '0px',
     paddingTop: '3px'
