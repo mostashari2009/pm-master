@@ -20,6 +20,7 @@ import {
   Labeled,
   Button,
   Link,
+  FunctionField,
 } from "react-admin";
 import WorkRequestTitle from "./WorkRequestTitle";
 import JalaaliDateField from "../Components/JalaaliDateField";
@@ -130,7 +131,7 @@ const useStyles = makeStyles({
     display: "inline-block",
     "& .MuiFormControl-marginDense": {
       border: "2px solid #A9A9A9",
-      background: "#fff",
+      backgroundColor: "whitesmoke",
       fontWeight: "300",
       fontSize: "./1rem",
       color: "rgb(69, 90, 100)",
@@ -163,7 +164,7 @@ const useStyles = makeStyles({
     display: "inline",
     "& .MuiFormControl-root": {
       border: "2px solid #A9A9A9",
-      background: "#fff",
+      backgroundColor: "whitesmoke",
       fontWeight: "300",
       fontSize: "./1rem",
       color: "rgb(69, 90, 100)",
@@ -197,7 +198,7 @@ const useStyles = makeStyles({
     display: "inline",
     "& .MuiFormControl-root": {
       border: "2px solid #A9A9A9",
-      background: "#fff",
+      backgroundColor: "whitesmoke",
       fontWeight: "400",
       fontSize: "./1rem",
       color: "rgb(69, 90, 100)",
@@ -379,7 +380,7 @@ const WorkRequestShow = (props) => {
               source="WorkPriorityID"
               reference="PMWorks/WorkPriority"
             >
-              <TextField source="WorkPriorityCode" />
+              <FunctionField  render={record => `${record.WorkPriorityCode} _ ${record.WorkPriorityName}`} /> 
             </ReferenceField>
 
             <ReferenceField
@@ -389,7 +390,7 @@ const WorkRequestShow = (props) => {
               source="TypeWrID"
               reference="PMWorks/TypeWr"
             >
-              <TextField source="TypeWrName" />
+            <FunctionField  render={record => `${record.TypeWrCode} _ ${record.TypeWrName}`} />
             </ReferenceField>
           </SimpleShowLayout>
           <SimpleShowLayout>
