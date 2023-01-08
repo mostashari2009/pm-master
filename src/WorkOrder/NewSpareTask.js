@@ -6,6 +6,27 @@ import { TextField, useRefresh, useUnselectAll,
 import AddIcon from '@material-ui/icons/Add';
 import SparePartFilter from '../SparePart/SparePartFilter';
 import Divider from '@material-ui/core/Divider';
+import { makeStyles } from "@material-ui/core/styles";
+
+const useStyles = makeStyles({
+    page: {
+      "& .MuiTableCell-head": {
+        backgroundColor: "#DCDCDC",
+        fontWeight: "700",
+      },
+  
+      "& .MuiTypography-body2": {
+        fontSize: "0.9rem",
+      },
+      "& .MuiTableCell-sizeSmall": {
+        padding: "6px 40px 6px 6px",
+      },
+      "& .MuiTableCell-body": {
+        alignItems: "center",
+        padding: "6px 40px 6px 6px",
+      },
+    },
+}); 
 
 export default function ScrollDialog(props) {
     const [taskTime, setTaskTime] = React.useState(null);
@@ -67,9 +88,18 @@ export default function ScrollDialog(props) {
 
 
     const PersonnalList = (...props) => {
+        const classes = useStyles();
         return (
         <ResourceContextProvider value="PMWorks/SparePart" {...props}>
-            <List basePath="PMWorks/SparePart" bulkActionButtons={<PersonnelBulkActionButtons />} filters={<SparePartFilter />} exporter={false} actions={false} {...props}>
+            <List 
+            basePath="PMWorks/SparePart" 
+            bulkActionButtons={<PersonnelBulkActionButtons />} 
+            filters={<SparePartFilter />} 
+            exporter={false} 
+            actions={false} 
+            {...props}
+            className={classes.page}
+            >
             <Datagrid>
                 <TextField label="کد" textAlgin="right" source="SparePartCode" />
                 <TextField label="عنوان" textAlgin="right" source="SparePartName" />
