@@ -74,6 +74,7 @@ import Divider from "@material-ui/core/Divider";
 import WOTaskFilters from "../WOTask/WOTaskFilters";
 import Logo from "../WorkOrder/logoWorkOrderShow.png";
 import CheckBoxOutlineBlankIcon from "@material-ui/icons/CheckBoxOutlineBlank";
+import WOTemplateActivityFilter from "../WOTemplateActivity/WOTemplateActivityFilter";
 const importOptions = {
   parseConfig: {
     encoding: "ISO-8859-1",
@@ -223,7 +224,7 @@ const WOSupplierActions = ({ basePath, data }, props) => {
 
   return (
     <TopToolbar>
-      <AddSupplierButton record={data} />
+      <AddSupplierButton record={data}  />
       <ExportButton className={classes.ex} label="خروجی" basePath={basePath} />
       <ImportButton
         label="ورودی"
@@ -272,7 +273,7 @@ const WODelayActions = ({ basePath, data }, props) => {
 
   return (
     <TopToolbar>
-      <AddDelayButton record={data} />
+      <AddDelayButton record={data}  />
       <ExportButton className={classes.ex} label="خروجی" basePath={basePath} />
       <ImportButton
         label="ورودی"
@@ -305,15 +306,9 @@ const WOTaskActions = ({ basePath, data }, props) => {
 
   return (
     <TopToolbar>
-      <QuickSelectTaskButton record={data} />
-      <AddTaskButton record={data} />
+      <QuickSelectTaskButton record={data}  />
+
       <ExportButton className={classes.ex} label="خروجی" basePath={basePath} />
-      <ImportButton
-        label="ورودی"
-        resource="PMWorks/WOTask"
-        {...props}
-        {...importOptions}
-      />
     </TopToolbar>
   );
 };
@@ -339,14 +334,8 @@ const WOStatusActions = ({ basePath, data }, props) => {
 
   return (
     <TopToolbar>
-      <AddWOStatusButton record={data} />
+      <AddWOStatusButton record={data} className={classes.ex} />
       <ExportButton className={classes.ex} label="خروجی" basePath={basePath} />
-      <ImportButton
-        label="ورودی"
-        resource="PMWorks/WOStatus"
-        {...props}
-        {...importOptions}
-      />
     </TopToolbar>
   );
 };
@@ -365,15 +354,6 @@ const useStyles = makeStyles({
       fontSize: "12px",
     },
 
-    "& .MuiFormControl-marginDense": {
-      border: "1px solid #DCDCDC",
-      right: "5px",
-      margin: "0 auto",
-      height: "80px",
-      width: "121px",
-      paddingRight: "2px",
-      fontSize: "12px",
-    },
     "& .MuiTypography-body2": {
       fontSize: "12px",
     },
@@ -386,6 +366,9 @@ const useStyles = makeStyles({
     "& .MuiTableCell-sizeSmall:last-child": {
       width: "150px",
     },
+    "& .MuiButton-textPrimary":{
+      color: "#0863cc",
+    },
   },
   row: {
     "& .nth-of-type(odd)": {
@@ -394,6 +377,7 @@ const useStyles = makeStyles({
     "& .last-child td, &:last-child th": {
       border: "0",
     },
+    
   },
 
   headCell: {
@@ -403,14 +387,35 @@ const useStyles = makeStyles({
   sho: {
     display: "inline-block",
     textAlignLast: "right",
+
+    "& .MuiFormControl-root": {
+      border: "1px solid #DCDCDC",
+      right: "5px",
+      margin: "0 auto",
+      height: "80px",
+      width: "121px",
+      paddingRight: "2px",
+      fontSize: "12px",
+    },
   },
   sec: {
     display: "inline-block",
     textAlignLast: "right",
+
+    "& .MuiFormControl-root": {
+      border: "1px solid #DCDCDC",
+      right: "5px",
+      margin: "0 auto",
+      height: "80px",
+      width: "121px",
+      paddingRight: "2px",
+      fontSize: "12px",
+    },
   },
 
   ex: {
     fontFamily: "inherit",
+    color: "#0863cc",
   },
   headerContainer: {
     gridTemplateColumns: "125px auto 125px",
@@ -514,6 +519,45 @@ const useStyles = makeStyles({
     fontSize: "12px",
     height: "53px",
   },
+  tab: {
+    color: "#243261",
+    //backgroundColor: "#92a8d1",
+    fontSize: "1rem",
+    fontWeight: "bold",
+  },
+  sho1: {
+    display: "inline-block",
+    "& .MuiFormControl-marginDense": {
+      border: "2px solid #A9A9A9",
+      backgroundColor: "whitesmoke",
+      fontWeight: "300",
+      fontSize: "./1rem",
+      color: "rgb(69, 90, 100)",
+      borderStartStartRadius: "15px",
+      borderStartEndRadius: "15px",
+      borderBottomLeftRadius: "15px",
+      borderBottomRightRadius: "15px",
+      right: "5px",
+      height: "60px",
+      width: "285px",
+      paddingRight: "10px",
+    },
+    "& .MuiInputLabel-shrink ": {
+      transform: "translate(30%, -8px ) scale(0.75) !important;",
+      background: "#fff",
+      color: "#0863cc",
+      paddingRight: "3px",
+    },
+    "& .MuiInputLabel-formControl": {
+      left: "auto",
+      color: "#0863cc",
+      margin: "0",
+      padding: "0px 5px",
+    },
+    "& .MuiFormLabel-root": {
+      position: "absolute",
+    },
+  },
 });
 
 const freq = [
@@ -567,6 +611,7 @@ const WOTaskList = (props) => {
               empty={false}
               filters={<WOSparePartFilter />}
               actions={<WOoSparePartActions data={record} />}
+              bulkActionButtons={false}
             >
               <Datagrid>
                 <ReferenceField
@@ -651,8 +696,23 @@ const WOTaskList = (props) => {
     </Show>
   );
 };
-
+const fun = [
+  { _id: "O", full_name: "اپراتور" },
+  { _id: "T", full_name: "تکنسین" },
+];
+const CustomPagination = (props) => (
+  <Pagination rowsPerPageOptions={[10, 25, 50, 100, 200]} {...props} />
+);
+const CustomPagination2 = (props) => (
+  <Pagination
+    style={{ display: "none" }}
+    limit={1000}
+    rowsPerPageOptions={[1000, 2000]}
+    {...props}
+  />
+);
 const WOTask = (props) => {
+  const classes = useStyles();
   return (
     <ReferenceManyField
       addLabel={false}
@@ -663,12 +723,19 @@ const WOTask = (props) => {
       <List
         {...props}
         empty={false}
-        filters={<WOTaskFilter />}
-        actions={<WOTaskActions data={props.record.id} />}
+        filters={<WOTemplateActivityFilter />}
+        actions={
+          <WOTaskActions
+            data={props.record.id}
+            dataa={props.record.WOTemplateID}
+          />
+        }
         basePath="PMWorks/WOTask"
         title=" "
+        bulkActionButtons={false}
+        pagination={<CustomPagination />}
       >
-        <Datagrid>
+        <Datagrid className={classes.page}>
           <ReferenceField
             label="کد فعالیت"
             textAlgin="right"
@@ -685,6 +752,53 @@ const WOTask = (props) => {
           >
             <TextField source="TaskName" />
           </ReferenceField>
+          <ReferenceField
+            label="تناوب"
+            textAlgin="right"
+            source="TaskID"
+            reference="PMWorks/AssetClassTask"
+          >
+            <TextField source="FrequencyName" />
+          </ReferenceField>
+          <ReferenceField
+            label="مقدار تناوب"
+            textAlgin="right"
+            source="TaskID"
+            reference="PMWorks/AssetClassTask"
+          >
+            <TextField source="FrequencyAmount" />
+          </ReferenceField>
+          <ReferenceField
+            label="مدت زمان انجام"
+            textAlgin="right"
+            source="TaskID"
+            reference="PMWorks/AssetClassTask"
+          >
+            <TextField source="DurationOfDo" />
+          </ReferenceField>
+          <ReferenceField
+            label="مسئول"
+            textAlgin="right"
+            source="TaskID"
+            reference="PMWorks/AssetClassTask"
+          >
+            <SelectField
+              label="مسئول"
+              textAlgin="right"
+              source="Functor"
+              choices={fun}
+              optionText="full_name"
+              optionValue="_id"
+            />
+          </ReferenceField>
+          <ReferenceField
+            label="تخصص"
+            textAlgin="right"
+            source="TaskID__JobCategoryID"
+            reference="PMWorks/JobCategory"
+          >
+            <TextField source="JobCategoryName" />
+          </ReferenceField>
         </Datagrid>
       </List>
     </ReferenceManyField>
@@ -695,7 +809,7 @@ const WorkOrderShow = (props) => {
   const componentRef = useRef();
 
   const ShowActions = ({ basePath, data }) => (
-    <TopToolbar className={classes.page0}>
+    <TopToolbar>
       <ReactToPrint
         trigger={() => (
           <IconButton
@@ -862,17 +976,6 @@ const WorkOrderShow = (props) => {
     );
   };
 
-  const CustomPagination = (props) => (
-    <Pagination rowsPerPageOptions={[10, 25, 50, 100, 200]} {...props} />
-  );
-  const CustomPagination2 = (props) => (
-    <Pagination
-      style={{ display: "none" }}
-      limit={1000}
-      rowsPerPageOptions={[1000, 2000]}
-      {...props}
-    />
-  );
   const classes = useStyles();
   return (
     <Show actions={<ShowActions />} {...props} title={<WorkOrderTitle />}>
@@ -1323,7 +1426,7 @@ const WorkOrderShow = (props) => {
             </SimpleShowLayout>
           </div>
         </Tab>
-        <Tab label="وضعیت" path="PMWorks/WOStatus">
+        <Tab label="وضعیت" path="PMWorks/WOStatus" className={classes.tab}>
           <ReferenceManyField
             addLabel={false}
             reference="PMWorks/WOStatus"
@@ -1335,9 +1438,11 @@ const WorkOrderShow = (props) => {
               empty={false}
               filters={<WOStatusFilter />}
               actions={<WOStatusActions data={record} />}
+              bulkActionButtons={false}
             >
-              <Datagrid>
+              <Datagrid className={classes.page}>
                 <ReferenceField
+                  className={classes.sho1}
                   label="کد وضعیت"
                   textAlgin="right"
                   source="StatusID"
@@ -1346,6 +1451,7 @@ const WorkOrderShow = (props) => {
                   <TextField source="StatusCode" />
                 </ReferenceField>
                 <ReferenceField
+                  className={classes.sho1}
                   label="نام وضعیت"
                   textAlgin="right"
                   source="StatusID"
@@ -1353,12 +1459,23 @@ const WorkOrderShow = (props) => {
                 >
                   <TextField source="StatusName" />
                 </ReferenceField>
+                <ReferenceField
+                  className={classes.sho1}
+                  label="نام کاربر"
+                  textAlgin="right"
+                  source="StatusID"
+                  reference="PMWorks/Status"
+                >
+                  <TextField source="StatusName" />
+                </ReferenceField>
                 <JalaaliDateField
+                  className={classes.sho1}
                   label="تاریخ ثبت"
                   textAlgin="right"
                   source="StatusDate"
                 />
                 <JalaaliTimeField
+                  className={classes.sho1}
                   label="زمان ثبت"
                   textAlgin="right"
                   source="StatusTime"
@@ -1367,7 +1484,11 @@ const WorkOrderShow = (props) => {
             </List>
           </ReferenceManyField>
         </Tab>
-        <Tab label="تجهیزات" path="PMWorks/WOAssetSubdivision">
+        <Tab
+          label="تجهیزات"
+          path="PMWorks/WOAssetSubdivision"
+          className={classes.tab}
+        >
           <ReferenceManyField
             addLabel={false}
             reference="PMWorks/WOAssetSubdivision"
@@ -1379,8 +1500,10 @@ const WorkOrderShow = (props) => {
               exporter={exporterWOAssetSubdivision}
               filters={<WOAssetSubdivisionFilter />}
               actions={<WOAssetSubdivisionActions data={record} />}
+              bulkActionButtons={false}
+              className={classes.page}
             >
-              <Datagrid expand={<WOTask />}>
+              <Datagrid expand={<WOTask />} >
                 <ReferenceField
                   label="کد تجهیز"
                   textAlgin="right"
@@ -1432,12 +1555,14 @@ const WorkOrderShow = (props) => {
                   WOAssetSubdivisionID__WorkOrderID: record,
                 }}
                 exporter={exporterTask}
-                bulkActionButtons={<TaskBulkActionButtons />}
+                //bulkActionButtons={<TaskBulkActionButtons />}
+                bulkActionButtons={false}
                 empty={false}
-                filters={<WOTaskFilter />}
+                filters={<WOTaskFilters />}
                 actions={<WOTaskListActions data={record} />}
+                className={classes.page}
               >
-                <Datagrid expand={<WOTaskList />}>
+                <Datagrid expand={<WOTaskList />} >
                   <ReferenceField
                     label="کد تجهیز"
                     textAlgin="right"
@@ -1492,7 +1617,7 @@ const WorkOrderShow = (props) => {
             </ResourceContextProvider>
           </ReferenceManyField>
         </Tab>
-        <Tab label="تامین کننده" path="PMWorks/WOSupplier">
+        <Tab label="پیمانکار" path="PMWorks/WOSupplier">
           <ReferenceManyField
             addLabel={false}
             reference="PMWorks/WOSupplier"
@@ -1504,8 +1629,10 @@ const WorkOrderShow = (props) => {
               empty={false}
               filters={<WOSupplierFilter />}
               actions={<WOSupplierActions data={record} />}
+              bulkActionButtons={false}
+              className={classes.page}
             >
-              <Datagrid>
+              <Datagrid >
                 <ReferenceField
                   label="نام تامین کننده"
                   textAlgin="right"
@@ -1536,7 +1663,7 @@ const WorkOrderShow = (props) => {
             </List>
           </ReferenceManyField>
         </Tab>
-        <Tab label="تاخیر ها" path="PMWorks/WODelay">
+        <Tab label="تاخیر" path="PMWorks/WODelay">
           <ReferenceManyField
             addLabel={false}
             reference="PMWorks/WODelay"
@@ -1548,8 +1675,10 @@ const WorkOrderShow = (props) => {
               empty={false}
               filters={<WODelayFilter />}
               actions={<WODelayActions data={record} />}
+              bulkActionButtons={false}
+              className={classes.page}
             >
-              <Datagrid>
+              <Datagrid >
                 <ReferenceField
                   label="نام تاخیر"
                   textAlgin="right"
@@ -1588,8 +1717,10 @@ const WorkOrderShow = (props) => {
               empty={false}
               filters={<WOSparePartFilter />}
               actions={<WOSparePartActions data={record} />}
+              bulkActionButtons={false}
+              className={classes.page}
             >
-              <Datagrid>
+              <Datagrid >
                 <ReferenceField
                   label="کد قطعه"
                   textAlgin="right"
@@ -1627,8 +1758,10 @@ const WorkOrderShow = (props) => {
               empty={false}
               filters={<WOPersonnelFilter />}
               actions={<WOPersonnelActions data={record} />}
+              bulkActionButtons={false}
+              className={classes.page}
             >
-              <Datagrid>
+              <Datagrid >
                 <ReferenceField
                   label="نام"
                   textAlgin="right"
