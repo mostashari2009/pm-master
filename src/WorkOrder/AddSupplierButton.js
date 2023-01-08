@@ -6,7 +6,7 @@ import { Button } from 'react-admin';
 
 const styles = {
   button: {
-    color: '#243261',
+    color: '#0863cc',
     fontSize: '0.8125rem',
     paddingLeft: '0px',
     paddingTop: '3px'
@@ -20,7 +20,7 @@ const AddSupplierButton = ({ classes, record }) => (
     component={Link}
     to={`/PMWorks/WOSupplier/create?WorkOrderID=${record.id}`}
     label="ایجاد"
-    title="اضافه کردن تامین کننده"
+    title=" اضافه کردن پیمانکار "
   >
     <AddIcon />
   </Button>
