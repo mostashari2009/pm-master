@@ -5,13 +5,10 @@ import { DateInput } from "../Components/JalaliDatePicker";
 import { makeStyles } from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
-  width: { width: "200px !important" },
   form: {
-    paddingTop: "15px",
-    "& .MuiIconButton-root.Mui-disabled": {
-      paddingRight: "2px",
-      color: "#fff",
-    },
+    alignItems: "center",
+    marginTop: "4px",
+    marginBottom: "4px",
     "& .MuiFilledInput-root": {
       //position: "relative",
       border: "2px solid #D9D9D9",
@@ -24,15 +21,9 @@ const useStyles = makeStyles({
       borderBottomLeftRadius: "15px",
       borderBottomRightRadius: "15px",
     },
-    "& button": {
-      borderStartStartRadius: "15px",
-      borderStartEndRadius: "15px",
-      borderBottomLeftRadius: "15px",
-      borderBottomRightRadius: "15px",
-      fontFamily: "B Nazanin",
-      color: "#0863cc",
+    "& .MuiFormControl-marginDense": {
+      width: "220px",
     },
-
     "& .MuiInputLabel-formControl": {
       left: "auto",
       color: "#0863cc",
@@ -43,27 +34,7 @@ const useStyles = makeStyles({
       color: "#0863cc",
       paddingRight: "3px",
     },
-    "& .RaButton-label-7": {
-      paddingRight: "5px",
-    },
-    "& .makeStyles-form-219 .MuiFilledInput-input": {
-      paddingLeft: "5px",
-    },
-    "& .MuiToolbar-root": {
-      backgroundColor: "#fff",
-    },
-
-    " & .MuiButton-containedPrimary": {
-      padding: "40px, 20px",
-    },
-    "& .MuiSelect-icon.Mui-disabled": {
-      color: "#fff",
-    },
-    "& .MuiFilledInput-filled:focus": {
-      border: "2px solid #0863cc",
-    },
     "& .MuiFilledInput-underline:before": {
-      content: "",
       position: "absolute",
       transform: "scaleX(0)",
     },
@@ -71,19 +42,6 @@ const useStyles = makeStyles({
       content: "",
       position: "absolute",
       transform: "scaleX(0)",
-    },
-    "& .MuiSelect-filled.MuiSelect-filled": {
-      borderStartStartRadius: "15px",
-      borderStartEndRadius: "15px",
-      borderBottomLeftRadius: "15px",
-      borderBottomRightRadius: "15px",
-      background: "#fff",
-    },
-    "& .RaResettableTextField-selectAdornment-74": {
-      marginRight: "90px",
-    },
-    "& .RaResettableTextField-selectAdornment-149": {
-      marginRight: "90px",
     },
   },
 });
